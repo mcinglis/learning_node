@@ -1,23 +1,24 @@
 
-var exec = require( 'child_process' ).exec;
+var querystring = require( 'querystring' );
 
 exports.start = function( res ) {
     console.log( 'start handler called' );
-    exec(
-        'find /',
-        { timeout: 10000, maxBuffer: 20000*1024 },
-        function( error, stdout ) {
-            res.writeHead( 200, { 'Content-Type': 'text/plain' } );
-            res.write( stdout );
-            res.end();
-        }
+    res.writeHead( 200, { 'Content-Type': 'text/html' } );
+    res.write(
+        '<!doctype html>' +
+        '<meta charset="utf-8">' +
+        '<form action="/upload" method=post>' +
+            '<textarea name=text rows=20 cols=60></textarea>' +
+            '<input type=submit value=Submit />' +
+        '</form>'
     );
+    res.end();
 };
 
-exports.upload = function( res ) {
+exports.upload = function( res, data ) {
     console.log( 'upload handler called' );
     res.writeHead( 200, { 'Content-Type': 'text/plain' } );
-    res.write( 'Hello Upload' );
+    res.write( 'You sent text: ' + querystring.parse(data).text );
     res.end();
 };
 
