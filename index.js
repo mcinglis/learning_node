@@ -6,7 +6,8 @@ var server          = require( './server' ),
 var handle = {
     '/': requestHandlers.start,
     '/start': requestHandlers.start,
-    '/upload': requestHandlers.upload
+    '/upload': requestHandlers.upload,
+    '/show': requestHandlers.show
 };
 
 server.start( router.route, handle );
